@@ -1,6 +1,6 @@
 (function() {
     "use strict";
-    var VERSION = "1.17.2";
+    var VERSION = "1.18.0";
     window.np_unwatched_plugin = true;
     var DEBUG = false;
     function log(message, data) {
@@ -1445,6 +1445,9 @@
         status: "favorite",
         title: "Избранное"
     }, {
+        status: "unwatched",
+        title: "Непросмотренные сериалы"
+    }, {
         status: "continues",
         title: "Продолжить просмотр"
     }, {
@@ -1484,7 +1487,7 @@
         }).then(onSuccess).catch(onError || function() {});
     }
     function fetchMineRow(status, page, perPage, onSuccess, onError) {
-        if (status === "continues") fetchContinues(page, perPage, onSuccess, onError); else fetchMediaLibrary(status, page, perPage, onSuccess, onError);
+        if (status === "continues") fetchContinues(page, perPage, onSuccess, onError); else if (status === "unwatched") fetchUnwatchedMain(page, perPage, onSuccess, onError); else fetchMediaLibrary(status, page, perPage, onSuccess, onError);
     }
     function openMineCard(data) {
         Lampa.Activity.push({
